@@ -8,6 +8,26 @@ RelatedChat is an open-source alternative communication platform. Both iOS (Swif
 
 <img src="https://rel.codes/messenger/android1.png" width="880">
 
+### List of Images
+* relatedchat_api : chat-api:latest
+* relatedchat_web : chat-web:latest
+* gqlserver
+* gqlserver_admin
+* postgres:13
+* redis:7.0.2
+* minio/minio:RELEASE.2022-02-05T04-40-59Z
+
+
+## Build your own docker 
+- API docker
+  ```bash
+  cd api
+  docker build . chat-api:latest
+  ```
+
+
+
+
 ## NEW FEATURES
 
 - Updated iOS (Swift) codebase

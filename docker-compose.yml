@@ -1,6 +1,6 @@
 services:
   relatedchat_api:
-    image: relatedcode/relatedchat-api:latest
+    image: vismis/relatedchat-api:latest
     container_name: relatedchat_api
     ports:
       - "4001:4001"
@@ -10,15 +10,15 @@ services:
       - config_files:/app/config
 
   relatedchat_web:
-    image: relatedcode/relatedchat-web:latest
+    image: vismis/relatedchat-web:latest
     container_name: relatedchat_web
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - relatedchat_api
 
   gqlserver:
-    image: relatedcode/gqlserver:latest
+    image: vismis/gqlserver:latest
     container_name: gqlserver
     ports:
       - "4000:4000"
@@ -60,33 +60,35 @@ services:
       - config_files:/app/config
 
   gqlserver_admin:
-    image: relatedcode/gqlserver-admin:latest
+    image: vismis/gqlserver-admin:latest
     container_name: gqlserver_admin
     ports:
-      - "81:3000"
+      - "8081:3000"
     depends_on:
       - gqlserver
 
   postgres:
     container_name: pg
-    image: postgres:13
+    image: postgres:13.3
+    user: root
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: gqlserver
       POSTGRES_PASSWORD: gqlserver
       POSTGRES_DB: gqlserver
-    volumes:
-      - ./data/pg:/var/lib/postgresql/data
+    # volumes:
+    #   - ./data/pg:/var/lib/postgresql/data
 
   redis:
-    image: redis:7.0.2
+    image: redis:7.2.4
     container_name: rd
+    user: root
     ports:
       - "6379:6379"
     command: redis-server --requirepass gqlserver --save 60 1
-    volumes:
-      - ./data/rd:/data
+    # volumes:
+    #   - ./data/rd:/data
 
   minio:
     image: minio/minio:RELEASE.2022-02-05T04-40-59Z
